@@ -24,7 +24,8 @@
 		this.delete = () => v.value = v.value.substr(0, v.value.length - 1);
 		this.clear = () => v.value = "";
 		this.calculate = () => {
-			var post = `exp=${v.value}`;
+			var value = v.value.replace("+", "%20");
+			var post = `exp=${value}`;
 			var url = "/api/Expression/Calculate";
 			jQuery.post(url, post, function (result) {
 				if (result != null)

@@ -12,7 +12,7 @@ namespace Calc.Compiler
 		/// <summary>
 		/// Operando 1.
 		/// </summary>
-		public float? Operand1 { get; set; }
+		public double? Operand1 { get; set; }
 
 		/// <summary>
 		/// Tipo de Operação.
@@ -22,13 +22,13 @@ namespace Calc.Compiler
 		/// <summary>
 		/// Operando 2.
 		/// </summary>
-		public float? Operand2 { get; set; }
+		public double? Operand2 { get; set; }
 
 		/// <summary>
 		/// Efetuar um cálculo entre os operadores definidos.
 		/// </summary>
 		/// <returns></returns>
-		public float Calculate()
+		public double Calculate()
 		{
 			if (!Operand1.HasValue) {
 				throw new MissingOperatorException();

@@ -59,7 +59,7 @@ namespace Calc.Compiler
 						}
 						number += chr;
 					}
-					list.Add(new Element() { Type = TypeEnum.Numeric, Value = Single.Parse(number) });
+					list.Add(new Element() { Type = TypeEnum.Numeric, Value = Double.Parse(number) });
 				} else {  //se for numérico
 					list.Add(new Element() { Type = TypeEnum.Symbol, Value = chr });
 				}
@@ -144,7 +144,7 @@ namespace Calc.Compiler
 		/// Efetuar o cálculo da expressão atual.
 		/// </summary>
 		/// <returns></returns>
-		public float Calculate()
+		public double Calculate()
 		{
 			if (!Validate()) {
 				throw new InvalidExpressionFormat();
@@ -172,8 +172,8 @@ namespace Calc.Compiler
 					}
 
 					//happy way
-					float operand1 = (float)elements[i - 1].Value;
-					float operand2 = (float)elements[i + 1].Value;
+					double operand1 = (double)elements[i - 1].Value;
+					double operand2 = (double)elements[i + 1].Value;
 
 					//fazer a operação e remover os operadores
 					elements[i].Type = TypeEnum.Numeric;
@@ -184,7 +184,7 @@ namespace Calc.Compiler
 					i--;  //reposicionar para próximo elemento não computado
 				}
 			}
-			return (float)elements[0].Value;
+			return (double)elements[0].Value;
 		}
 	}
 }

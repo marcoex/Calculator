@@ -30,7 +30,7 @@ namespace Calc.Compiler
 		/// <param name="operand1">Operando 1.</param>
 		/// <param name="operand2">Operando 2.</param>
 		/// <returns></returns>
-		public override float Calculate(float operand1, float operand2)
+		public override double Calculate(double operand1, double operand2)
 		{
 			return operand1 / operand2;
 		}

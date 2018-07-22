@@ -12,8 +12,9 @@ namespace Calc.Api.Controllers
     {
         [HttpPost]
 		[Route("Calculate")]
-		public float? Calculate(string exp)
+		public double? Calculate(string exp)
         {
+			exp = exp.Replace(" ", "+");
 			var exprObj = new Expression(exp);
 			if (!exprObj.Validate()) {
 				return null;

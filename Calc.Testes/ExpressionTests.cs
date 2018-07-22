@@ -24,18 +24,18 @@ namespace Testes
 		[TestMethod]
 		public void Expression_Calculate()
 		{
-			Assert.AreEqual(new Expression("10+3,3").Calculate(), (float)13.3);
-			Assert.AreEqual(new Expression("1*3").Calculate(), (float)3);
-			Assert.AreEqual(new Expression("3*3/3").Calculate(), (float)3);
-			Assert.AreEqual(new Expression("1*3/2").Calculate(), (float)1.5);
-			Assert.AreEqual(new Expression("1500/500*10+3,3").Calculate(), (float)33.3);
-			Assert.AreEqual(new Expression("1,5+3*8/2+2,5-1").Calculate(), (float)15);
+			Assert.AreEqual(new Expression("10+3,3").Calculate(), (double)13.3);
+			Assert.AreEqual(new Expression("1*3").Calculate(), (double)3);
+			Assert.AreEqual(new Expression("3*3/3").Calculate(), (double)3);
+			Assert.AreEqual(new Expression("1*3/2").Calculate(), (double)1.5);
+			Assert.AreEqual(new Expression("1500/500*10+3,3").Calculate(), (double)33.3);
+			Assert.AreEqual(new Expression("1,5+3*8/2+2,5-1").Calculate(), (double)15);
 
-			Assert.AreEqual(new Expression("-5*-1").Calculate(), (float)5);
-			Assert.AreEqual(new Expression("-8/-4").Calculate(), (float)2);
-			Assert.AreEqual(new Expression("-3+-1").Calculate(), (float)-4);
-			Assert.AreEqual(new Expression("-1-1").Calculate(), (float)-2);
-			Assert.AreEqual(new Expression("-1-1").Calculate(), (float)-2);
+			Assert.AreEqual(new Expression("-5*-1").Calculate(), (double)5);
+			Assert.AreEqual(new Expression("-8/-4").Calculate(), (double)2);
+			Assert.AreEqual(new Expression("-3+-1").Calculate(), (double)-4);
+			Assert.AreEqual(new Expression("-1-1").Calculate(), (double)-2);
+			Assert.AreEqual(new Expression("-1-1").Calculate(), (double)-2);
 		}
 
 		[TestMethod]

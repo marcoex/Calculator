@@ -25,7 +25,7 @@ namespace Calc.Compiler
 		/// <param name="operand1">Operando 1.</param>
 		/// <param name="operand2">Operando 2.</param>
 		/// <returns></returns>
-		public abstract float Calculate(float operand1, float operand2);
+		public abstract double Calculate(double operand1, double operand2);
 
 		/// <summary>
 		/// Retorna um operador através do símbolo matemático.

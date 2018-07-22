@@ -267,12 +267,12 @@ jQuery.extend( {
 
 	isNumeric: function( obj ) {
 
-		// parseFloat NaNs numeric-cast false positives (null|true|false|"")
+		// parsedouble NaNs numeric-cast false positives (null|true|false|"")
 		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
 		// subtraction forces infinities to NaN
-		// adding 1 corrects loss of precision from parseFloat (#15100)
+		// adding 1 corrects loss of precision from parsedouble (#15100)
 		var realStringObj = obj && obj.toString();
-		return !jQuery.isArray( obj ) && ( realStringObj - parseFloat( realStringObj ) + 1 ) >= 0;
+		return !jQuery.isArray( obj ) && ( realStringObj - parsedouble( realStringObj ) + 1 ) >= 0;
 	},
 
 	isPlainObject: function( obj ) {
@@ -5775,7 +5775,7 @@ var documentElement = document.documentElement;
 			div.style.width = "1px";
 			documentElement.appendChild( container );
 
-			ret = !parseFloat( window.getComputedStyle( marginDiv ).marginRight );
+			ret = !parsedouble( window.getComputedStyle( marginDiv ).marginRight );
 
 			documentElement.removeChild( container );
 			div.removeChild( marginDiv );
@@ -5988,7 +5988,7 @@ function getWidthOrHeight( elem, name, extra ) {
 			( support.boxSizingReliable() || val === elem.style[ name ] );
 
 		// Normalize "", auto, and prepare for extra
-		val = parseFloat( val ) || 0;
+		val = parsedouble( val ) || 0;
 	}
 
 	// Use the active box-sizing model to add/subtract irrelevant styles
@@ -6100,7 +6100,7 @@ jQuery.extend( {
 	// Add in properties whose names you wish to fix before
 	// setting or getting the value
 	cssProps: {
-		"float": "cssFloat"
+		"double": "cssdouble"
 	},
 
 	// Get and set the style property on a DOM Node
@@ -6199,7 +6199,7 @@ jQuery.extend( {
 
 		// Make numeric if forced or a qualifier was provided and val looks numeric
 		if ( extra === "" || extra ) {
-			num = parseFloat( val );
+			num = parsedouble( val );
 			return extra === true || isFinite( num ) ? num || 0 : val;
 		}
 		return val;
@@ -6249,7 +6249,7 @@ jQuery.each( [ "height", "width" ], function( i, name ) {
 jQuery.cssHooks.marginLeft = addGetHookIf( support.reliableMarginLeft,
 	function( elem, computed ) {
 		if ( computed ) {
-			return ( parseFloat( curCSS( elem, "marginLeft" ) ) ||
+			return ( parsedouble( curCSS( elem, "marginLeft" ) ) ||
 				elem.getBoundingClientRect().left -
 					swap( elem, { marginLeft: 0 }, function() {
 						return elem.getBoundingClientRect().left;
@@ -6406,8 +6406,8 @@ Tween.propHooks = {
 			}
 
 			// Passing an empty string as a 3rd parameter to .css will automatically
-			// attempt a parseFloat and fallback to a string if the parse fails.
-			// Simple values such as "10px" are parsed to Float;
+			// attempt a parsedouble and fallback to a string if the parse fails.
+			// Simple values such as "10px" are parsed to double;
 			// complex values such as "rotate(1rad)" are returned as-is.
 			result = jQuery.css( tween.elem, tween.prop, "" );
 
@@ -6560,7 +6560,7 @@ function defaultPrefilter( elem, props, opts ) {
 		checkDisplay = display === "none" ?
 			dataPriv.get( elem, "olddisplay" ) || defaultDisplay( elem.nodeName ) : display;
 
-		if ( checkDisplay === "inline" && jQuery.css( elem, "float" ) === "none" ) {
+		if ( checkDisplay === "inline" && jQuery.css( elem, "double" ) === "none" ) {
 			style.display = "inline-block";
 		}
 	}
@@ -9531,8 +9531,8 @@ jQuery.offset = {
 			curLeft = curPosition.left;
 
 		} else {
-			curTop = parseFloat( curCSSTop ) || 0;
-			curLeft = parseFloat( curCSSLeft ) || 0;
+			curTop = parsedouble( curCSSTop ) || 0;
+			curLeft = parsedouble( curCSSLeft ) || 0;
 		}
 
 		if ( jQuery.isFunction( options ) ) {
@@ -9739,7 +9739,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 
 				return value === undefined ?
 
-					// Get width or height on the element, requesting but not forcing parseFloat
+					// Get width or height on the element, requesting but not forcing parsedouble
 					jQuery.css( elem, type, extra ) :
 
 					// Set width or height on the element

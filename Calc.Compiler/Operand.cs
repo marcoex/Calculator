@@ -9,6 +9,6 @@ namespace Calc.Compiler
 	/// </summary>
 	public class Operand : Element
 	{
-		public new float Value { get; set; }
+		public new double Value { get; set; }
 	}
 }

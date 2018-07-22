@@ -1,0 +1,13 @@
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\bin\Debug\netcoreapp2.0\Calc.Api.deps.json
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\bin\Debug\netcoreapp2.0\Calc.Api.runtimeconfig.json
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\bin\Debug\netcoreapp2.0\Calc.Api.runtimeconfig.dev.json
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\bin\Debug\netcoreapp2.0\Calc.Api.dll
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\bin\Debug\netcoreapp2.0\Calc.Api.pdb
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\bin\Debug\netcoreapp2.0\Calc.Compiler.dll
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\bin\Debug\netcoreapp2.0\Calc.Compiler.pdb
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\obj\Debug\netcoreapp2.0\Calc.Api.csprojResolveAssemblyReference.cache
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\obj\Debug\netcoreapp2.0\Calc.Api.csproj.CoreCompileInputs.cache
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\obj\Debug\netcoreapp2.0\Calc.Api.AssemblyInfoInputs.cache
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\obj\Debug\netcoreapp2.0\Calc.Api.AssemblyInfo.cs
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\obj\Debug\netcoreapp2.0\Calc.Api.dll
+D:\Users\netch\Documents\GitHub\Calculator\Calc.Api\obj\Debug\netcoreapp2.0\Calc.Api.pdb
