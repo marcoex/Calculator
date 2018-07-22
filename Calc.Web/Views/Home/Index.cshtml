@@ -1,0 +1,57 @@
+﻿@using Calc.Web.Enumeradores
+@{
+	ViewData["Title"] = "calculator";
+}
+
+@section Styles {
+	<link href="~/css/calculator.css" rel="stylesheet" />
+}
+<div>
+	<blockquote>
+		<h1>Obrigado</h1>
+		<p>
+			Obrigado pela oportunidade.<br />
+			Segue um exemplo de calculadora web.<br />
+			<ul>
+				<li>Html gerado com taghelpers.</li>
+				<li>Html tranformado em 'objeto' com jQuery.</li>
+				<li>Integração com api para fazer o cálculo.</li>
+				<li>Captura de teclado.</li>
+			</ul>
+		</p>
+	</blockquote>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<calculator>
+				<visor></visor>
+				<grid>
+					<button value="clear" button-type="Command" key="Escape" title="Apagar"></button>
+					<button value="delete" button-type="Command" key="Backspace" title="Reiniciar"></button>
+					<button button-type="Disabled"></button>
+					<button value="/" button-type="Operation" title="Divisão"></button>
+					<button value="7" button-type="Operator">7</button>
+					<button value="8" button-type="Operator">8</button>
+					<button value="9" button-type="Operator">9</button>
+					<button value="*" button-type="Operation" title="Multiplicação"></button>
+					<button value="4" button-type="Operator">4</button>
+					<button value="5" button-type="Operator">5</button>
+					<button value="6" button-type="Operator">6</button>
+					<button value="-" button-type="Operation" title="Subtração"></button>
+					<button value="1" button-type="Operator">1</button>
+					<button value="2" button-type="Operator">2</button>
+					<button value="3" button-type="Operator">3</button>
+					<button value="+" button-type="Operation" title="Adição"></button>
+					<button button-type="Disabled"></button>
+					<button value="0" button-type="Operator">0</button>
+					<button value="," button-type="Complement" title="">,</button>
+					<button value="calculate" button-type="Command" key="Enter" title="Calcular">=</button>
+				</grid>
+			</calculator>
+		</div>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+@section Scripts {
+	<script src="~/js/calculator.js"></script>
+}

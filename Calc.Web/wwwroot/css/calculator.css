@@ -1,0 +1,35 @@
+﻿.calculator {
+	border: 3px double silver;
+	width: 215px;
+	padding: 4px;
+}
+
+.calculator .grid {
+	display: grid;
+	grid-template-areas: 'a b c d' 'e f g h' 'i j k l' 'm n o p' 'q r s t';
+}
+
+.calculator button {
+	height: 50px;
+	width: 50px;
+	font: 15pt consolas;
+	background-color: gainsboro;
+}
+
+	.calculator button.disabled {
+		pointer-events: none;
+	}
+
+	.calculator button.detach {
+		font-weight: bolder;
+	}
+
+.calculator .visor {
+    width: 100%;
+    margin-bottom: 4px;
+    height: 40px;
+    border: 2px inset whitesmoke;
+    font: bold 20pt consolas;
+    text-align: right;
+    padding: 0 4px;
+}
