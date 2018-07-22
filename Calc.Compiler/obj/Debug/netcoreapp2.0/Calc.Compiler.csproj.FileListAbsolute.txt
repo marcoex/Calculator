@@ -1,9 +1,0 @@
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\bin\Debug\netcoreapp2.0\Calc.Compiler.deps.json
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\bin\Debug\netcoreapp2.0\Calc.Compiler.dll
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\bin\Debug\netcoreapp2.0\Calc.Compiler.pdb
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\obj\Debug\netcoreapp2.0\Calc.Compiler.csprojResolveAssemblyReference.cache
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\obj\Debug\netcoreapp2.0\Calc.Compiler.csproj.CoreCompileInputs.cache
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\obj\Debug\netcoreapp2.0\Calc.Compiler.AssemblyInfoInputs.cache
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\obj\Debug\netcoreapp2.0\Calc.Compiler.AssemblyInfo.cs
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\obj\Debug\netcoreapp2.0\Calc.Compiler.dll
-D:\Users\netch\Documents\GitHub\Calculator\Calc.Compiler\obj\Debug\netcoreapp2.0\Calc.Compiler.pdb
