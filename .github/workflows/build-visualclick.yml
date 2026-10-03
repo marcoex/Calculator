@@ -20,8 +20,11 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
-      - name: Extract source
-        run: unzip -q VisualClickJS-source.zip
+      - name: Rebuild source archive
+        run: |
+          cat vcparts/00.txt vcparts/01.txt vcparts/02.txt vcparts/03.txt | base64 -d > VisualClickJS-source-fixed.zip
+          unzip -t VisualClickJS-source-fixed.zip
+          unzip -q VisualClickJS-source-fixed.zip
       - name: Build debug APK
         working-directory: VisualClickJS
         run: gradle :app:assembleDebug --stacktrace
