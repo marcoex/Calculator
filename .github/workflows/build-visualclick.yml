@@ -20,17 +20,36 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
-      - name: Rebuild source archive
+      - name: Rebuild and harden source
         run: |
           cat vcparts/00.txt vcparts/01.txt vcparts/02.txt vcparts/03.txt | base64 -d > VisualClickJS-source-fixed.zip
           unzip -t VisualClickJS-source-fixed.zip
           unzip -q VisualClickJS-source-fixed.zip
-      - name: Build debug APK
+          sed -i 's/android:allowBackup="true"/android:allowBackup="false"/' VisualClickJS/app/src/main/AndroidManifest.xml
+          sed -i 's/android:accessibilityEventTypes="typeAllMask"/android:accessibilityEventTypes="typeWindowStateChanged"/' VisualClickJS/app/src/main/res/xml/accessibility_service_config.xml
+          sed -i 's/android:notificationTimeout="50"/android:notificationTimeout="100"/' VisualClickJS/app/src/main/res/xml/accessibility_service_config.xml
+          sed -i 's/versionCode 1/versionCode 2/' VisualClickJS/app/build.gradle
+          sed -i "s/versionName '0.1.0'/versionName '0.2.0'/" VisualClickJS/app/build.gradle
+          echo '--- Manifest ---'
+          cat VisualClickJS/app/src/main/AndroidManifest.xml
+          echo '--- Accessibility config ---'
+          cat VisualClickJS/app/src/main/res/xml/accessibility_service_config.xml
+          echo '--- Build config ---'
+          cat VisualClickJS/app/build.gradle
+      - name: Build release APK
         working-directory: VisualClickJS
-        run: gradle :app:assembleDebug --stacktrace
-      - name: Rename APK
-        run: cp VisualClickJS/app/build/outputs/apk/debug/app-debug.apk VisualClickJS-0.1-debug.apk
+        run: gradle :app:assembleRelease --stacktrace
+      - name: Sign release APK
+        run: |
+          keytool -genkeypair -v -keystore visualclick-release.jks -storepass visualclick2026 -keypass visualclick2026 -alias visualclick -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=VisualClick JS, OU=Personal Build, O=VisualClick, L=Curitiba, ST=Parana, C=BR"
+          /usr/local/lib/android/sdk/build-tools/35.0.0/zipalign -f -p 4 VisualClickJS/app/build/outputs/apk/release/app-release-unsigned.apk VisualClickJS-0.2-release-aligned.apk
+          /usr/local/lib/android/sdk/build-tools/35.0.0/apksigner sign --ks visualclick-release.jks --ks-key-alias visualclick --ks-pass pass:visualclick2026 --key-pass pass:visualclick2026 --out VisualClickJS-0.2-release.apk VisualClickJS-0.2-release-aligned.apk
+          /usr/local/lib/android/sdk/build-tools/35.0.0/apksigner verify --verbose --print-certs VisualClickJS-0.2-release.apk
+          rm -f visualclick-release.jks VisualClickJS-0.2-release-aligned.apk
+      - name: Inspect APK permissions
+        run: |
+          /usr/local/lib/android/sdk/build-tools/35.0.0/aapt dump permissions VisualClickJS-0.2-release.apk || true
       - uses: actions/upload-artifact@v4
         with:
-          name: VisualClickJS-APK
-          path: VisualClickJS-0.1-debug.apk
+          name: VisualClickJS-0.2-release
+          path: VisualClickJS-0.2-release.apk
