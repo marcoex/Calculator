@@ -1,4 +1,4 @@
-name: Build VisualClick APK
+name: Build VisualClick 0.3
 on:
   push:
     branches:
@@ -20,7 +20,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
-      - name: Rebuild and harden source
+      - name: Rebuild and patch source to 0.3
         run: |
           cat vcparts/00.txt vcparts/01.txt vcparts/02.txt vcparts/03.txt | base64 -d > VisualClickJS-source-fixed.zip
           unzip -t VisualClickJS-source-fixed.zip
@@ -28,28 +28,46 @@ jobs:
           sed -i 's/android:allowBackup="true"/android:allowBackup="false"/' VisualClickJS/app/src/main/AndroidManifest.xml
           sed -i 's/android:accessibilityEventTypes="typeAllMask"/android:accessibilityEventTypes="typeWindowStateChanged"/' VisualClickJS/app/src/main/res/xml/accessibility_service_config.xml
           sed -i 's/android:notificationTimeout="50"/android:notificationTimeout="100"/' VisualClickJS/app/src/main/res/xml/accessibility_service_config.xml
-          sed -i 's/versionCode 1/versionCode 2/' VisualClickJS/app/build.gradle
-          sed -i "s/versionName '0.1.0'/versionName '0.2.0'/" VisualClickJS/app/build.gradle
+          sed -i 's/versionCode 1/versionCode 3/' VisualClickJS/app/build.gradle
+          sed -i "s/versionName '0.1.0'/versionName '0.3.0'/" VisualClickJS/app/build.gradle
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('VisualClickJS/app/src/main/java/br/visualclick/app/MainActivity.java')
+          s = p.read_text()
+          s = s.replace('VisualClick JS 0.1\\nMotor de automação visual', 'VisualClick JS 0.3\\nMotor de automação visual')
+          old = '''        Button access = button("Abrir configurações de Acessibilidade");\n        access.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)));\n        root.addView(access);\n'''
+          new = '''        TextView privacy = new TextView(this);\n        privacy.setText("Privacidade: a captura de tela e o reconhecimento são processados localmente no aparelho. " +\n                "O app não solicita permissão de Internet. A Acessibilidade é usada somente para capturar a tela, " +\n                "executar os gestos definidos pelo seu script e mostrar o botão PARAR.");\n        privacy.setPadding(0, dp(8), 0, dp(8));\n        root.addView(privacy);\n\n        Button access = button("Abrir configurações de Acessibilidade");\n        access.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)));\n        root.addView(access);\n'''
+          if old not in s:
+              raise SystemExit('Trecho de MainActivity não encontrado')
+          p.write_text(s.replace(old, new))
+          PY
+          rm -f VisualClickJS-source-0.3.zip
+          zip -qr VisualClickJS-source-0.3.zip VisualClickJS
           echo '--- Manifest ---'
           cat VisualClickJS/app/src/main/AndroidManifest.xml
           echo '--- Accessibility config ---'
           cat VisualClickJS/app/src/main/res/xml/accessibility_service_config.xml
           echo '--- Build config ---'
           cat VisualClickJS/app/build.gradle
-      - name: Build release APK
+      - name: Build release APK and AAB
         working-directory: VisualClickJS
-        run: gradle :app:assembleRelease --stacktrace
-      - name: Sign release APK
         run: |
-          keytool -genkeypair -v -keystore visualclick-release.jks -storepass visualclick2026 -keypass visualclick2026 -alias visualclick -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=VisualClick JS, OU=Personal Build, O=VisualClick, L=Curitiba, ST=Parana, C=BR"
-          /usr/local/lib/android/sdk/build-tools/35.0.0/zipalign -f -p 4 VisualClickJS/app/build/outputs/apk/release/app-release-unsigned.apk VisualClickJS-0.2-release-aligned.apk
-          /usr/local/lib/android/sdk/build-tools/35.0.0/apksigner sign --ks visualclick-release.jks --ks-key-alias visualclick --ks-pass pass:visualclick2026 --key-pass pass:visualclick2026 --out VisualClickJS-0.2-release.apk VisualClickJS-0.2-release-aligned.apk
-          /usr/local/lib/android/sdk/build-tools/35.0.0/apksigner verify --verbose --print-certs VisualClickJS-0.2-release.apk
-          rm -f visualclick-release.jks VisualClickJS-0.2-release-aligned.apk
-      - name: Inspect APK permissions
+          gradle :app:assembleRelease :app:bundleRelease --stacktrace
+      - name: Collect unsigned outputs and local signing tools
         run: |
-          /usr/local/lib/android/sdk/build-tools/35.0.0/aapt dump permissions VisualClickJS-0.2-release.apk || true
+          cp VisualClickJS/app/build/outputs/apk/release/app-release-unsigned.apk VisualClickJS-0.3-release-unsigned.apk
+          cp VisualClickJS/app/build/outputs/bundle/release/app-release.aab VisualClickJS-0.3-release-unsigned.aab
+          mkdir -p android-signing-tools/lib
+          cp /usr/local/lib/android/sdk/build-tools/35.0.0/apksigner android-signing-tools/
+          cp /usr/local/lib/android/sdk/build-tools/35.0.0/zipalign android-signing-tools/
+          cp /usr/local/lib/android/sdk/build-tools/35.0.0/lib/apksigner.jar android-signing-tools/lib/
+          chmod +x android-signing-tools/apksigner android-signing-tools/zipalign
+          zip -qr android-signing-tools.zip android-signing-tools
       - uses: actions/upload-artifact@v4
         with:
-          name: VisualClickJS-0.2-release
-          path: VisualClickJS-0.2-release.apk
+          name: VisualClickJS-0.3-unsigned
+          path: |
+            VisualClickJS-0.3-release-unsigned.apk
+            VisualClickJS-0.3-release-unsigned.aab
+            VisualClickJS-source-0.3.zip
+            android-signing-tools.zip
